@@ -15,8 +15,9 @@ require('./sockets/socket');
 const publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
 
+const PORT = process.env.PORT || 4569;
 
-server.listen( process.env.PORT, (err) => {
+server.listen( PORT, (err) => {
     if (err) throw new Error(err);
 
     console.log('Servidor corriendo en puerto', process.env.PORT );
