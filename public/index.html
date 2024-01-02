@@ -17,19 +17,6 @@
         socket.on('disconnect', function() {
             console.log('Conexión perdida con el servidor');
         });
-
-        socket.emit('mensaje', {nombre: 'Adri'});
-
-        socket.on('nuevo-mensaje', (payload) => {
-            console.clear();
-            console.log('Escuchando', payload);
-        });
-
-        socket.on('active-bands', (bands) => {
-            console.clear();
-            console.table(bands);
-        });
-
        
     </script>
 </body>

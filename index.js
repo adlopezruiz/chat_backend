@@ -1,10 +1,16 @@
 const express = require('express');
-const { connect } = require('http2');
 const path = require('path');
 require('dotenv').config();
 
+//DB config
+require('./database/config').dbConnection();
+
+
 // App de express
 const app = express();
+
+//Lectura de información de body de peticion http
+app.use(express.json());
 
 // Node Server
 const server = require('http').createServer(app);
@@ -14,6 +20,10 @@ require('./sockets/socket');
 //Path publico
 const publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
+
+
+//Rutas
+app.use('/api/login', require('./routes/auth'));
 
 const PORT = process.env.PORT || 4569;
 
