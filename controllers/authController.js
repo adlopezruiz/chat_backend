@@ -21,20 +21,20 @@ const addUser = async (req,res = response) => {
         }
 
 
-        const user = new User(req.body);
+        const dbUser = new User(req.body);
 
         //Encrypt password
         const salt = bcrypt.genSaltSync();
-        user.password = bcrypt.hashSync(password,salt);
+        dbUser.password = bcrypt.hashSync(password,salt);
 
-        await user.save();
+        await dbUser.save();
 
         //Generate JWT
-        const token = await generateJWT(user.id);
+        const token = await generateJWT(dbUser.id);
 
         res.json({
             ok: true,
-            user,
+            dbUser,
             token
         });
 
@@ -100,15 +100,15 @@ const renewToken = async (req, res = response) => {
     const uid = req.uid;
 
     // Generate new JWT
-    const newToken = await generateJWT(uid);
+    const token = await generateJWT(uid);
 
     // Get user by uid, User mongoose, findById
-    const user = await User.findById(uid);
+    const dbUser = await User.findById(uid);
 
     res.json({
         ok: true,
-        msg: user,
-        newToken
+        dbUser,
+        token
     });
 }
 
